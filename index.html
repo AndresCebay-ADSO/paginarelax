@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pruebas de Seguridad de Software — Guía</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="Guía práctica y ampliada sobre pruebas de seguridad de software: pentesting, escaneo de vulnerabilidades, autenticación y cifrado de datos." />
+</head>
+<body class="bg-slate-50 text-slate-800 leading-relaxed">
+  <header class="bg-white shadow-sm">
+    <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-sky-600 to-indigo-600 rounded-md flex items-center justify-center text-white font-bold">PS</div>
+        <div>
+          <h1 class="text-xl font-semibold">Pruebas de Seguridad de Software</h1>
+          <p class="text-sm text-slate-500">Guía práctica y recursos</p>
+        </div>
+      </div>
+      <nav class="flex items-center gap-4">
+        <a href="#full-info" class="text-sm px-3 py-2 rounded hover:bg-slate-100">Información completa</a>
+        <a href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener" class="text-sm px-3 py-2 rounded bg-sky-600 text-white">Referencia OWASP</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-10">
+    <!-- Hero -->
+    <section class="grid md:grid-cols-2 gap-8 items-center mb-10">
+      <div>
+        <h2 class="text-3xl font-extrabold mb-3">Protege tu aplicación: guía práctica para pruebas de seguridad</h2>
+        <p class="text-slate-600 mb-4">Resumen ampliado de los principales tipos de pruebas: pentesting, escaneos, autenticación y cifrado de datos. Incluye pasos, herramientas y listas de verificación para cada caso.</p>
+        <div class="flex gap-3">
+          <a href="#full-info" class="px-4 py-2 rounded bg-indigo-600 text-white font-medium">Ver guía completa</a>
+          <a href="#checklist" class="px-4 py-2 rounded border border-slate-200 text-slate-700">Checklist rápido</a>
+        </div>
+      </div>
+      <div class="bg-gradient-to-br from-white to-slate-100 rounded-lg p-6 shadow-sm">
+        <h3 class="font-semibold mb-2">Objetivo</h3>
+        <p class="text-slate-600">Identificar puertas traseras, errores de configuración o fallas que un atacante podría explotar. Aplicable tanto a APIs como a aplicaciones web y móviles.</p>
+        <div class="mt-4">
+          <h4 class="font-semibold mb-2">Herramientas comunes</h4>
+          <ul class="list-inside list-disc text-slate-700">
+            <li>Metasploit — explotación y pruebas controladas.</li>
+            <li>Burp Suite — proxy/intercept y escaneo de aplicaciones web.</li>
+            <li>Kali Linux — distribución con múltiples utilidades de seguridad.</li>
+            <li>Nmap, Nikto, OpenVAS — escaneo de red y servicios.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sections -->
+    <section id="full-info" class="space-y-8">
+
+      <!-- Pentesting -->
+      <article class="bg-white rounded-lg p-6 shadow-sm">
+        <h3 class="text-2xl font-bold mb-3">1. Pruebas de Penetración (Pentesting)</h3>
+        <p class="text-slate-700 mb-3">Simulan ataques reales contra la aplicación para medir sus defensas. El pentest puede ser <strong>externo</strong> (desde Internet), <strong>interno</strong> (dentro de la red), o <strong>caja blanca/negra/gris</strong> según el nivel de información entregada al equipo de pruebas.</p>
+
+        <h4 class="font-semibold mt-4">Fases recomendadas</h4>
+        <ol class="list-decimal list-inside text-slate-700">
+          <li><strong>Reconocimiento:</strong> recopilación de información pública y mapeo de superficie de ataque.</li>
+          <li><strong>Enumeración:</strong> identificar servicios, endpoints, versiones de software.</li>
+          <li><strong>Explotación:</strong> intentar explotar vulnerabilidades identificadas en un entorno controlado.</li>
+          <li><strong>Post-explotación:</strong> determinar impacto y vectores de persistencia.</li>
+          <li><strong>Reporte y remediación:</strong> documentar hallazgos con pasos de reproducción y recomendaciones.</li>
+        </ol>
+
+        <h4 class="font-semibold mt-4">Buenas prácticas</h4>
+        <ul class="list-disc list-inside text-slate-700">
+          <li>Definir el alcance y obtener autorización por escrito antes de comenzar.</li>
+          <li>Realizar pruebas en entornos de staging cuando sea posible.</li>
+          <li>Pausar o limitar técnicas destructivas (explotaciones que dañen datos).</li>
+          <li>Priorizar hallazgos por riesgo (CVSS, impacto en negocio).</li>
+        </ul>
+      </article>
+
+      <!-- Vulnerability scanning -->
+      <article class="bg-white rounded-lg p-6 shadow-sm">
+        <h3 class="text-2xl font-bold mb-3">2. Exploraciones de Vulnerabilidades</h3>
+        <p class="text-slate-700 mb-3">Búsqueda sistemática y repetible de fallos en aplicaciones, bibliotecas o infraestructuras. Suelen combinar herramientas automáticas con revisiones manuales para reducir falsos positivos.</p>
+
+        <h4 class="font-semibold mt-4">Tipos</h4>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h5 class="font-semibold">Automáticas</h5>
+            <p class="text-slate-700">Escáneres (SAST/DAST): identifican configuraciones inseguras, dependencias vulnerables y malas prácticas.</p>
+            <ul class="list-disc list-inside text-slate-700 mt-2">
+              <li>Snyk, Dependabot — dependencias vulnerables.</li>
+              <li>OWASP ZAP, Nikto — pruebas dinámicas en entornos web.</li>
+              <li>OpenVAS — escaneo de red/servicios.</li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="font-semibold">Manual / Semi-automáticas</h5>
+            <p class="text-slate-700">Revisión experta para confirmar hallazgos, validar impactos y descubrir problemas que los escáneres no detectan.</p>
+            <p class="text-slate-700 mt-2">Ejemplo: un escáner puede marcar un endpoint inseguro, pero un auditor manual determina si es explotable en contexto.</p>
+          </div>
+        </div>
+
+        <h4 class="font-semibold mt-4">Integración en CI/CD</h4>
+        <p class="text-slate-700">Incorpora SAST y análisis de dependencias en pipelines para bloquear builds con vulnerabilidades críticas. Ejecuta DAST en entornos de staging periódicamente.</p>
+      </article>
+
+      <!-- Authentication -->
+      <article class="bg-white rounded-lg p-6 shadow-sm">
+        <h3 class="text-2xl font-bold mb-3">3. Pruebas de Autenticación</h3>
+        <p class="text-slate-700 mb-3">Verifican que los mecanismos de acceso protejan correctamente la identidad y permisos de usuarios.</p>
+
+        <h4 class="font-semibold mt-4">Elementos a revisar</h4>
+        <ul class="list-disc list-inside text-slate-700">
+          <li>Políticas de contraseñas: longitud mínima, complejidad, y almacenamiento seguro (bcrypt/argon2).</li>
+          <li>Flujos de autenticación: inicio de sesión, recuperación de contraseña, MFA (2FA).</li>
+          <li>Manejo de sesiones: expiración, rotación, invalidación en logout.</li>
+          <li>Control de acceso: roles y permisos (principio de menor privilegio).</li>
+        </ul>
+
+        <h4 class="font-semibold mt-4">Pruebas concretas</h4>
+        <ul class="list-disc list-inside text-slate-700">
+          <li>Intentos de fuerza bruta y bloqueo de cuenta seguro (rate limiting).</li>
+          <li>Pruebas de bypass en funciones de recuperación de cuenta y token reuse.</li>
+          <li>Verificar tokens JWT: firma, expiración, almacenamiento seguro (no en localStorage si evita XSS).</li>
+        </ul>
+      </article>
+
+      <!-- Transmission security -->
+      <article class="bg-white rounded-lg p-6 shadow-sm">
+        <h3 class="text-2xl font-bold mb-3">4. Pruebas de Seguridad en Transmisión de Datos</h3>
+        <p class="text-slate-700 mb-3">Aseguran que la información sensitiva se transporte de forma cifrada y que no existan fugas por configuración inadecuada.</p>
+
+        <h4 class="font-semibold mt-4">Qué comprobar</h4>
+        <ul class="list-disc list-inside text-slate-700">
+          <li>HTTPS enforce: HSTS, redirección HTTP → HTTPS.</li>
+          <li>Configuración TLS: versiones mínimas, suites seguras y certificados válidos.</li>
+          <li>Headers de seguridad: Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy.</li>
+          <li>Evitar exposición de secretos en URLs, logs o respuestas JSON.</li>
+        </ul>
+
+        <h4 class="font-semibold mt-4">Herramientas útiles</h4>
+        <p class="text-slate-700">sslyze, sslscan, observatory by Mozilla (online), y pruebas manuales con curl/openssl para validar la cadena de certificados.</p>
+      </article>
+
+    </section>
+
+    <!-- Checklist -->
+    <section id="checklist" class="mt-10 bg-white rounded-lg p-6 shadow-sm">
+      <h3 class="text-2xl font-bold mb-3">Checklist rápido</h3>
+      <div class="grid md:grid-cols-2 gap-4">
+        <ul class="list-inside list-decimal text-slate-700">
+          <li>Definir alcance y obtener autorización.</li>
+          <li>Ejecutar escaneo de dependencias (Snyk/Dependabot).</li>
+          <li>Revisar y endurecer configuraciones TLS/HTTPS.</li>
+          <li>Implementar y verificar MFA para cuentas sensibles.</li>
+        </ul>
+        <ul class="list-inside list-decimal text-slate-700">
+          <li>Integrar SAST en CI/CD.</li>
+          <li>Limitar intentos de autenticación y aplicar rate-limiting.</li>
+          <li>Revisar logs para detectar intentos de intrusión.</li>
+          <li>Documentar y priorizar remediaciones (alta → baja).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Resources -->
+    <section class="mt-10 grid md:grid-cols-2 gap-6">
+      <div class="bg-white rounded-lg p-6 shadow-sm">
+        <h4 class="font-semibold mb-2">Recursos y lectura</h4>
+        <ul class="list-disc list-inside text-slate-700">
+          <li><a href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener" class="text-indigo-600">OWASP Top Ten</a></li>
+          <li><a href="https://portswigger.net/burp" target="_blank" rel="noopener" class="text-indigo-600">Burp Suite — PortSwigger</a></li>
+          <li><a href="https://www.kali.org/" target="_blank" rel="noopener" class="text-indigo-600">Kali Linux</a></li>
+          <li><a href="https://www.owasp.org/index.php/Category:Testing" target="_blank" rel="noopener" class="text-indigo-600">OWASP Testing Guide</a></li>
+        </ul>
+      </div>
+      <div class="bg-white rounded-lg p-6 shadow-sm">
+        <h4 class="font-semibold mb-2">Enlace original</h4>
+        <p class="text-slate-700 mb-3">El enlace que tenías en la infografía (<span class="font-mono">www.unsitiogenial.es</span>) ahora redirige en esta página al apartado "Información completa" y a recursos externos oficiales como OWASP. Si quieres, puedo dejar el enlace apuntando a una URL propia (por ejemplo: <span class="font-mono">/recursos/seguridad</span>) o generar un archivo HTML separado con toda la documentación.</p>
+        <div class="flex gap-2">
+          <a href="#full-info" class="px-3 py-2 rounded border border-slate-200 text-sm">Ir a información completa</a>
+          <a href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener" class="px-3 py-2 rounded bg-sky-600 text-white text-sm">Ir a OWASP</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-12 text-sm text-slate-500">
+      <div class="max-w-6xl mx-auto px-6 py-6 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>Creado por <strong>Andrés</strong> — Guía generada automáticamente</div>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:underline">Licencia</a>
+          <a href="#" class="hover:underline">Contacto</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
